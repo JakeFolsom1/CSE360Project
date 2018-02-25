@@ -51,7 +51,7 @@ public class FilePanel extends JPanel implements ActionListener{
 	averageWordsLabel = new JLabel("Average Words");
 	averageWordsField = new JTextField(20);
 	
-	
+	lol;
 	
 	JPanel buttonPanel = new JPanel();
     buttonPanel.add(inputButton);
