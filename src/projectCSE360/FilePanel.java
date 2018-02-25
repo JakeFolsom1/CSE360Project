@@ -18,14 +18,21 @@ public class FilePanel extends JPanel implements ActionListener{
 	private JTextField wordsProcessedField;
 	private JTextField linesField;
 	private JTextField blankLinesRemoved;
-	private JTextField averageWords;
-	private JTextField averageLines;
-	private JTextField averageLineLength;
+	private JTextField averageWordsField;
+	private JTextField averageLinesField;
+	private JTextField averageLineLengthField;
 	private JTextArea fact;
-	private JLabel wordsProcessedLabel;
-	
 
+	private JLabel wordsProcessedLabel;
+	private JLabel averageWordsLabel;
+	private JLabel blankLinesRemovedLabel;
+	private JLabel linesLabel;
+	private JLabel averageLineLengthLabel;
+	private JLabel averageLinesLabel;
+	//FileProcessed file;
+	
     public FilePanel() {
+    	
         super(new BorderLayout());
 	
        fact = new JTextArea(5,20);
@@ -37,6 +44,13 @@ public class FilePanel extends JPanel implements ActionListener{
 	
 	outputButton = new JButton ("Output a File");
 	outputButton.addActionListener(this);
+	
+	wordsProcessedLabel = new JLabel ("Words Processed");
+	wordsProcessedField = new JTextField(20);
+	
+	averageWordsLabel = new JLabel("Average Words");
+	averageWordsField = new JTextField(20);
+	
 	
 	
 	JPanel buttonPanel = new JPanel();
