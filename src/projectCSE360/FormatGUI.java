@@ -1,25 +1,10 @@
-package projectCSE360;
+import javax.swing.*;
 
-import javax.swing.JFrame;
-
-
-public class FormatGUI {
-
-	public static void main(String[] args)
-	{
-		JFrame frame = new JFrame ("File Formatted");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+public class FormatGUI extends JApplet {
+	public void init(){
+		FilePanel fpanel = new FilePanel();
+		getContentPane().add(fpanel);
 		
-		FilePanel panel = new FilePanel();
-		frame.getContentPane().add(panel);
-		
-		
-		
-		frame.pack();
-		frame.setVisible(true);
+		this.setSize(500, 400);
 	}
-	
-	
-	
-	
 }

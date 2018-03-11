@@ -1,25 +1,27 @@
-package projectCSE360;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import javax.swing.*;
-import javax.swing.filechooser.*;
-import javax.jnlp.*;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import java.util.ArrayList;
 
- 
-
-public class FilePanel extends JPanel implements ActionListener{
+public class FilePanel extends JPanel implements ActionListener {
+	private Canvas canvas;
 	static private String newline =  "/n";
 	private JButton inputButton;
 	private JButton outputButton;
+	private JButton leftJustification;
+	private JButton rightJustification;
 	private JTextField wordsProcessedField;
 	private JTextField linesField;
 	private JTextField blankLinesRemoved;
 	private JTextField averageWordsField;
 	private JTextField averageLinesField;
+<<<<<<< Updated upstream
+=======
+	private JPanel filePanel;
+	private JPanel buttonPanel;
+	private JPanel leftPanel;
+>>>>>>> Stashed changes
 	private JTextField averageLineLengthField;
 	private JTextArea fact;
 
@@ -29,6 +31,7 @@ public class FilePanel extends JPanel implements ActionListener{
 	private JLabel linesLabel;
 	private JLabel averageLineLengthLabel;
 	private JLabel averageLinesLabel;
+<<<<<<< Updated upstream
 	//FileProcessed file;
 	
     public FilePanel() {
@@ -52,34 +55,88 @@ public class FilePanel extends JPanel implements ActionListener{
 	averageWordsField = new JTextField(20);
 	
 	lol;
+=======
+	private JLabel justificationLabel;
 	
-	JPanel buttonPanel = new JPanel();
-    buttonPanel.add(inputButton);
-    buttonPanel.add(outputButton);
-
-    add(buttonPanel, BorderLayout.PAGE_START);
-    add(logScrollPane, BorderLayout.CENTER);
-    }
- 
-
-
-	private class ButtonListener implements ActionListener
-	{
-	public void actionPerformed(ActionEvent event) {
-		// TODO Auto-generated method stub
-		if(event.getSource()== inputButton)
-		{
-			FileOpenService fos = null;
-			FileContests fileContents = null;
-		}
-	}
-	}
-
-
-
+	 public FilePanel() { 
+		/*
+		 * Note: I need the components left aligned, I am not sure how to go about doing this properly without
+		 *  adding a fuckton of layouts, i've tried a lot of different methods go ahead and try it out yourself.  
+		 *  
+		 *  
+		 *   
+		 */
+		 
+		 	this.setLayout(new FlowLayout(FlowLayout.LEFT));
+	    	filePanel = new JPanel();
+	    	buttonPanel = new JPanel();
+	    	
+			wordsProcessedLabel = new JLabel ("Words Processed");
+			wordsProcessedField = new JTextField(20);					
+			wordsProcessedField.setEditable(false);
+			
+			linesField = new JTextField(20);
+			linesField.setEditable(false);
+			linesLabel = new JLabel("Lines");
+			
+			blankLinesRemovedLabel = new JLabel("Blank Lines Removed");
+			blankLinesRemoved = new JTextField(20);
+			blankLinesRemoved.setEditable(false);
+			
+			averageWordsLabel = new JLabel("Average Words Per Line");
+			averageWordsField = new JTextField(20);
+			averageWordsField.setEditable(false);
+			
+			averageLineLengthLabel = new JLabel("Average Line Length");
+			averageLineLengthField = new JTextField(20);
+			averageLineLengthField.setEditable(false);
+			
+			outputButton = new JButton ("Output a File");
+			outputButton.addActionListener(this);
+>>>>>>> Stashed changes
+	
+			inputButton = new JButton("Import");
+			justificationLabel = new JLabel("Justification:");
+			leftJustification = new JButton("Left");
+			rightJustification = new JButton("Right");
+			
+	    	buttonPanel.setLayout(new FlowLayout());
+			buttonPanel.add(inputButton, BorderLayout.WEST);
+	    	buttonPanel.add(justificationLabel);
+	    	buttonPanel.add(leftJustification);
+	    	buttonPanel.add(rightJustification);
+	    	
+	    	filePanel.setSize(WIDTH, HEIGHT);
+	    	filePanel.setLayout(new BoxLayout(filePanel, BoxLayout.PAGE_AXIS));
+	    	filePanel.setAlignmentX(LEFT_ALIGNMENT);
+	    	filePanel.add(wordsProcessedLabel, BorderLayout.WEST);
+	    	filePanel.add(wordsProcessedField);
+	    	filePanel.add(linesLabel);
+	    	filePanel.add(linesField);
+	    	filePanel.add(blankLinesRemovedLabel);
+	    	filePanel.add(blankLinesRemoved);
+	    	filePanel.add(averageWordsLabel);
+	    	filePanel.add(averageWordsField);
+	    	filePanel.add(averageLineLengthLabel);
+	    	filePanel.add(averageLineLengthField);
+	    	filePanel.add(buttonPanel);
+	    	filePanel.add(outputButton);
+	    	
+	    	add(filePanel);
+	    }
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub ADD METHODS HERE~~~~!!!!!
 		
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
