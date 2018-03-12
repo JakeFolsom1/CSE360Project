@@ -16,46 +16,17 @@ public class FilePanel extends JPanel implements ActionListener {
 	private JTextField blankLinesRemoved;
 	private JTextField averageWordsField;
 	private JTextField averageLinesField;
-<<<<<<< Updated upstream
-=======
 	private JPanel filePanel;
 	private JPanel buttonPanel;
 	private JPanel leftPanel;
->>>>>>> Stashed changes
 	private JTextField averageLineLengthField;
 	private JTextArea fact;
-
 	private JLabel wordsProcessedLabel;
 	private JLabel averageWordsLabel;
 	private JLabel blankLinesRemovedLabel;
 	private JLabel linesLabel;
 	private JLabel averageLineLengthLabel;
 	private JLabel averageLinesLabel;
-<<<<<<< Updated upstream
-	//FileProcessed file;
-	
-    public FilePanel() {
-    	
-        super(new BorderLayout());
-	
-       fact = new JTextArea(5,20);
-       fact.setMargin(new Insets(10,10,10,10));
-       fact.setEditable(false);
-       JScrollPane logScrollPane = new JScrollPane(fact);
-	inputButton = new JButton ("Input a File");
-	inputButton.addActionListener(this);
-	
-	outputButton = new JButton ("Output a File");
-	outputButton.addActionListener(this);
-	
-	wordsProcessedLabel = new JLabel ("Words Processed");
-	wordsProcessedField = new JTextField(20);
-	
-	averageWordsLabel = new JLabel("Average Words");
-	averageWordsField = new JTextField(20);
-	
-	lol;
-=======
 	private JLabel justificationLabel;
 	
 	 public FilePanel() { 
@@ -93,7 +64,6 @@ public class FilePanel extends JPanel implements ActionListener {
 			
 			outputButton = new JButton ("Output a File");
 			outputButton.addActionListener(this);
->>>>>>> Stashed changes
 	
 			inputButton = new JButton("Import");
 			justificationLabel = new JLabel("Justification:");
