@@ -1,3 +1,5 @@
+package projectCSE360;
+
 import javax.swing.*;
 
 public class FormatGUI extends JApplet {
