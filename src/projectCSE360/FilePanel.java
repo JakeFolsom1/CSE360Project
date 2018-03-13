@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FilePanel extends JPanel implements ActionListener {
+	private String[][] wordArray; 
 	private Canvas canvas;
 	static private String newline =  "/n";
 	private JButton inputButton;
@@ -47,6 +48,7 @@ public class FilePanel extends JPanel implements ActionListener {
 		 *	TODO: ACTIONLISTENERS FOR BUTTONS
 		 * \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 		 */
+		 	
 		 	fileSelected = null; 
 		 	this.setLayout(new FlowLayout(FlowLayout.LEFT));
 	    	filePanel = new JPanel();
@@ -153,28 +155,28 @@ public class FilePanel extends JPanel implements ActionListener {
 		    			String tempWord;
 		    			int lineCount = 0;
 		    			int WordCount = 0;
-						FileReader in = new FileReader(fileSelected);
-						BufferedReader br = new BufferedReader(in);
+		    			FileReader in = new FileReader(fileSelected);
 						Scanner scan = new Scanner(fileSelected);
+						Scanner scan2 = new Scanner(fileSelected);
 						while(scan.hasNext())		//Counts the words in the .txt file used to form the X axis of the 2D array
 						{
 							scan.next();
 							WordCount++;
 						}
-						while(scan.hasNextLine())		//Counts the lines of the .txt file, used to form the Y axis of the 2D array
+						while(scan2.hasNextLine())		//Counts the lines of the .txt file, used to form the Y axis of the 2D array
 						{
-							scan.nextLine();
+							scan2.nextLine();
 							lineCount++;
 						}
-						String[][] wordArray = new String[WordCount][lineCount];							//Define the array here :)
+						wordsProcessedField.setText(Integer.toString(WordCount));
+						linesField.setText(Integer.toString(lineCount));
+						wordArray = new String[WordCount][lineCount];
 						while(scan.hasNext())		//This will be used to define the new file format, we will copy words into a 2D array then count # of words
 						{
 							int x = 0;
 							int y = 0;
-							tempWord = scan.next();
+							wordArray[x][y] = scan.next(); //We cut out the middle man
 						}
-						wordsProcessedField.setText(Integer.toString(WordCount));
-						linesField.setText(Integer.toString(lineCount));
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

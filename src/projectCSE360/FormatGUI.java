@@ -7,6 +7,6 @@ public class FormatGUI extends JApplet {
 		FilePanel fpanel = new FilePanel();
 		getContentPane().add(fpanel);
 		
-		this.setSize(500, 400);
+		this.setSize(600, 400);
 	}
 }
