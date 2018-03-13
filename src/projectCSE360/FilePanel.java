@@ -8,10 +8,7 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.io.BufferedReader;
 import java.io.*;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -41,14 +38,14 @@ public class FilePanel extends JPanel implements ActionListener {
 	private JLabel averageLinesLabel;
 	private JLabel justificationLabel;
 	private File fileSelected;
-	
+	private ArrayList[][] wordsList = new ArrayList[0][0];
 	 public FilePanel() { 
 		/*
-		 * Note: I need the components left aligned, I am not sure how to go about doing this properly without
-		 *  adding a fuckton of layouts, i've tried a lot of different methods go ahead and try it out yourself.  
-		 *  
-		 *  
-		 *   
+		 * \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+		 *	Below is the Code for the GUI, TODO's will be listed below for work with the GUI
+		 *	TODO: FIX THE ALIGNMENT ON THE GUI
+		 *	TODO: ACTIONLISTENERS FOR BUTTONS
+		 * \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 		 */
 		 	fileSelected = null; 
 		 	this.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -113,23 +110,34 @@ public class FilePanel extends JPanel implements ActionListener {
 	    	filePanel.add(outputButton);
 	    	
 	    	add(filePanel);
-	    	if(fileSelected != null){   		
-	    	try
-	    	{
-	    	BufferedReader reader = new BufferedReader(new FileReader(fileSelected));
-	    	}
-	    	catch(Exception ex)
-	    	{
-	    		System.out.println("We encountered an error while parsing your file");
-	    	}	
-	    }
+	    	
+			/*
+			 * \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+			 *	Depreciated code, keeping it here for bug testing on file selection it has no other purpose in life
+			 * \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+			 */
+//	    	if(fileSelected != null){   		
+//	    	try
+//	    	{
+//	    	BufferedReader reader = new BufferedReader(new FileReader(fileSelected));
+//	    	}
+//	    	catch(Exception ex)
+//	    	{
+//	    		System.out.println("We encountered an error while parsing your file");
+//	    	}	
+//	    }
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == inputButton)
 		{
-	//TODO: Test against missing filetypes, jfc wrapper should prevent this but nest in try{} catch{} later for bad file types
-			
+			/*
+			 * \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+			 *	Below is the code for most of the action that happens behind the scenes (AKA Backend) TODO will be listed below
+			 *	TODO: Fix handling for input
+			 * \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+			 */
+			ArrayList<String[]> listOfWords = new ArrayList<String[]>();
 			JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 			jfc.setDialogTitle("Select a .txt file");
 			jfc.setAcceptAllFileFilterUsed(false);
@@ -141,12 +149,37 @@ public class FilePanel extends JPanel implements ActionListener {
 				fileSelected = jfc.getSelectedFile();
 				System.out.println("File Found at " + fileSelected.getPath());
 		    		importedFileName.setText(fileSelected.getName());
-				/*
-				 * 
-				 * TODO: WE REALLY NEED TO ADD FUNCTIONALITY TO WHERE I CAN ACTUALLY CHECK BUFFER
-				 * 
-				 * 
-				 */
+		    		try {
+		    			String tempWord;
+		    			int lineCount = 0;
+		    			int WordCount = 0;
+						FileReader in = new FileReader(fileSelected);
+						BufferedReader br = new BufferedReader(in);
+						Scanner scan = new Scanner(fileSelected);
+						while(scan.hasNext())		//Counts the words in the .txt file used to form the X axis of the 2D array
+						{
+							scan.next();
+							WordCount++;
+						}
+						while(scan.hasNextLine())		//Counts the lines of the .txt file, used to form the Y axis of the 2D array
+						{
+							scan.nextLine();
+							lineCount++;
+						}
+						String[][] wordArray = new String[WordCount][lineCount];							//Define the array here :)
+						while(scan.hasNext())		//This will be used to define the new file format, we will copy words into a 2D array then count # of words
+						{
+							int x = 0;
+							int y = 0;
+							tempWord = scan.next();
+						}
+						wordsProcessedField.setText(Integer.toString(WordCount));
+						linesField.setText(Integer.toString(lineCount));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		    		
 			}
 		}
 	}
