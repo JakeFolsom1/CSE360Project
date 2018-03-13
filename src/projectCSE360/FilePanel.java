@@ -28,6 +28,7 @@ public class FilePanel extends JPanel implements ActionListener {
 	private JPanel filePanel;
 	private JPanel buttonPanel;
 	private JPanel importPanel;
+	private JPanel exportPanel;
 	private JTextField averageLineLengthField;
 	private JTextArea fact;
 	private JLabel importedFileName;
@@ -38,7 +39,10 @@ public class FilePanel extends JPanel implements ActionListener {
 	private JLabel averageLineLengthLabel;
 	private JLabel averageLinesLabel;
 	private JLabel justificationLabel;
-	private File fileSelected;
+	private JLabel errorLabel; 
+	private JLabel exportedFileName;
+	private File importedFileSelected;
+	private File exportFileSelected;
 	private ArrayList[][] wordsList = new ArrayList[0][0];
 	 public FilePanel() { 
 		/*
@@ -49,7 +53,8 @@ public class FilePanel extends JPanel implements ActionListener {
 		 * \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 		 */
 		 	
-		 	fileSelected = null; 
+		 	exportFileSelected = null;
+		 	importedFileSelected = null; 
 		 	this.setLayout(new FlowLayout(FlowLayout.LEFT));
 	    	filePanel = new JPanel();
 	    	buttonPanel = new JPanel();
@@ -91,9 +96,19 @@ public class FilePanel extends JPanel implements ActionListener {
 	    	buttonPanel.add(leftJustification);
 	    	buttonPanel.add(rightJustification);
 	    	
+	    	errorLabel = new JLabel(" ");
+	    	errorLabel.setForeground(Color.red);
+	    	
 	    	importPanel.setLayout(new FlowLayout());
 	    	importPanel.add(inputButton);
 	    	importPanel.add(importedFileName);
+	    	
+	    	exportedFileName = new JLabel();
+	    	exportPanel = new JPanel();
+	    	exportPanel.setLayout(new FlowLayout());
+	    	exportPanel.add(outputButton);
+	    	exportPanel.add(exportedFileName);
+	    	
 	    	filePanel.setSize(WIDTH, HEIGHT);
 	    	filePanel.setLayout(new BoxLayout(filePanel, BoxLayout.PAGE_AXIS));
 	    	filePanel.setAlignmentX(LEFT_ALIGNMENT);
@@ -109,8 +124,8 @@ public class FilePanel extends JPanel implements ActionListener {
 	    	filePanel.add(averageLineLengthField);
 	    	filePanel.add(buttonPanel);
 	    	filePanel.add(importPanel);
-	    	filePanel.add(outputButton);
-	    	
+	    	filePanel.add(exportPanel);
+	    	filePanel.add(errorLabel);
 	    	add(filePanel);
 	    	
 			/*
@@ -137,27 +152,29 @@ public class FilePanel extends JPanel implements ActionListener {
 			 * \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 			 *	Below is the code for most of the action that happens behind the scenes (AKA Backend) TODO will be listed below
 			 *	TODO: Fix handling for input
+			 *	TODO: Move logic to seperate classes
+			 *
 			 * \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 			 */
 			ArrayList<String[]> listOfWords = new ArrayList<String[]>();
 			JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-			jfc.setDialogTitle("Select a .txt file");
+			jfc.setDialogTitle("Select a .txt file for import");
 			jfc.setAcceptAllFileFilterUsed(false);
 			jfc.setMultiSelectionEnabled(false);
 			FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt files only", "txt");
 			jfc.addChoosableFileFilter(filter);
 			int returnValue = jfc.showDialog(null,"Import .txt file!");
 			if(returnValue == JFileChooser.APPROVE_OPTION){
-				fileSelected = jfc.getSelectedFile();
-				System.out.println("File Found at " + fileSelected.getPath());
-		    		importedFileName.setText(fileSelected.getName());
+				importedFileSelected = jfc.getSelectedFile();
+				System.out.println("File Found at " + importedFileSelected.getPath());
+		    		importedFileName.setText(importedFileSelected.getName());
 		    		try {
 		    			String tempWord;
 		    			int lineCount = 0;
 		    			int WordCount = 0;
-		    			FileReader in = new FileReader(fileSelected);
-						Scanner scan = new Scanner(fileSelected);
-						Scanner scan2 = new Scanner(fileSelected);
+		    			FileReader in = new FileReader(importedFileSelected);
+						Scanner scan = new Scanner(importedFileSelected);
+						Scanner scan2 = new Scanner(importedFileSelected);
 						while(scan.hasNext())		//Counts the words in the .txt file used to form the X axis of the 2D array
 						{
 							scan.next();
@@ -184,7 +201,38 @@ public class FilePanel extends JPanel implements ActionListener {
 		    		
 			}
 		}
+		if(e.getSource() == outputButton)
+		{
+			JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+			jfc.setDialogTitle("Select a .txt file for export");
+			jfc.setAcceptAllFileFilterUsed(false);
+			jfc.setMultiSelectionEnabled(false);
+			FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt files only", "txt");
+			jfc.addChoosableFileFilter(filter);
+			int returnValue = jfc.showDialog(null,"export .txt file!");
+			if(returnValue == JFileChooser.APPROVE_OPTION){
+				exportFileSelected = jfc.getSelectedFile();
+				exportedFileName.setText(exportFileSelected.getName());
+				if((exportFileSelected.getPath().compareTo(importedFileSelected.getPath()) == 0))
+				{
+					System.out.println("File Found at " + exportFileSelected.getPath());
+					errorLabel.setText("Error: You cannot export to the same file");
+				}	
+				else
+				{
+					/* \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+					 *	Take 2D array and then allow exporting into the system.
+					 * \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ */
+					System.out.println("Exported Successfully");
+					errorLabel.setText(" ");
+				}
+			}
+			
+		}
+		
 	}
+	
+}
 
 	
 	
@@ -193,6 +241,4 @@ public class FilePanel extends JPanel implements ActionListener {
 	
 	
 	
-	
-	
-}
+
