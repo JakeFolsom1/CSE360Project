@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -94,8 +95,8 @@ public class FileFormatter
 
         ArrayList<String> nonEmptyLines = lines.stream().filter(str -> !str.isEmpty()).collect(Collectors.toCollection(ArrayList::new));
         int[] lineLengths = nonEmptyLines.stream().mapToInt(String::length).toArray();
-        ArrayList<String> words = nonEmptyLines.stream().flatMap(str -> Stream.of(str.split(" "))).collect(Collectors.toCollection(ArrayList::new));
-
+        ArrayList<String> words = nonEmptyLines.stream().flatMap(str -> Stream.of(str.split("\\s+"))).collect(Collectors.toCollection(ArrayList::new));
+ 
         results.wordsProcessed = words.size();
 
         // now time for actual formatting
@@ -129,7 +130,6 @@ public class FileFormatter
 
         results.averageLineLength = (float) Arrays.stream(lineLengths).sum() / (float)results.numberOfLines;
         results.averageWordsPerLine = (float)results.wordsProcessed / (float)results.numberOfLines;
-
         return results;
     }
 }

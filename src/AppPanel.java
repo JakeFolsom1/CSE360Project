@@ -46,7 +46,7 @@ public class AppPanel extends JPanel
         outputSelect = new ButtonLabelGroup("Select Output File");
         outputSelect.addButtonListener(event -> {
             int state = outputChooser.showOpenDialog(this);
-
+          
             if (state == JFileChooser.APPROVE_OPTION)
             {
                 File file = outputChooser.getSelectedFile();
