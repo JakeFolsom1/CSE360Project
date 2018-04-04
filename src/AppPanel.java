@@ -11,13 +11,15 @@ public class AppPanel extends JPanel
     private ButtonLabelGroup   inputSelect;
     private ButtonLabelGroup   outputSelect;
     private JustificationGroup justificationGroup;
-
+    
+    private InfoGroup wordSpacesPanel;
     private InfoGroup wordsProcessedPanel;
     private InfoGroup numberOfLinesPanel;
     private InfoGroup blankLinesRemovedPanel;
     private InfoGroup averageWordsPerLinePanel;
     private InfoGroup averageLineLengthPanel;
-
+    private TextGroup lineLengthPanel;
+    private TextGroup wordSpacing;
     private JButton formatButton;
 
     public AppPanel()
@@ -64,16 +66,19 @@ public class AppPanel extends JPanel
         });
 
         wordsProcessedPanel = new InfoGroup("Words Processed:");
-        numberOfLinesPanel = new InfoGroup("Number of Lines:");
+        numberOfLinesPanel = new InfoGroup("Number of Lines:");  
         blankLinesRemovedPanel = new InfoGroup("Blank Lines Removed:");
         averageWordsPerLinePanel = new InfoGroup("Average Words Per Line:");
         averageLineLengthPanel = new InfoGroup("Average Line Length:");
-
+        wordSpacesPanel = new InfoGroup("Total Number of Spaces:");
+        lineLengthPanel = new TextGroup("Line length:", null);
+        
         formatButton = new JButton("Format");
         formatButton.addActionListener(event -> {
             try
             {
                 FileFormatter.Results results = Main.getFormatter().format();
+                results.numberOfLines = (lineLengthPanel.getInput()); // Gets line length	
                 wordsProcessedPanel.setInfo(results.wordsProcessed + "");
                 numberOfLinesPanel.setInfo(results.numberOfLines + "");
                 blankLinesRemovedPanel.setInfo(results.blankLinesRemoved + "");
@@ -110,6 +115,7 @@ public class AppPanel extends JPanel
                         .addGroup(inputSelect.getHorizontalGroup(layout))
                         .addGroup(outputSelect.getHorizontalGroup(layout))
                         .addGroup(justificationGroup.getHorizontalGroup(layout))
+                        .addGroup(lineLengthPanel.getHorizontalGroup(layout))
                         .addComponent(formatButton)
                 )
                 .addGroup(
@@ -119,6 +125,7 @@ public class AppPanel extends JPanel
                         .addGroup(blankLinesRemovedPanel.getHorizontalGroup(layout))
                         .addGroup(averageWordsPerLinePanel.getHorizontalGroup(layout))
                         .addGroup(averageLineLengthPanel.getHorizontalGroup(layout))
+                        .addGroup(wordSpacesPanel.getHorizontalGroup(layout))
                 )
         );
 
@@ -129,6 +136,7 @@ public class AppPanel extends JPanel
                         .addGroup(inputSelect.getVerticalGroup(layout))
                         .addGroup(outputSelect.getVerticalGroup(layout))
                         .addGroup(justificationGroup.getVerticalGroup(layout))
+                        .addGroup(lineLengthPanel.getVerticalGroup(layout))
                         .addComponent(formatButton)
                 )
                 .addGroup(
@@ -138,6 +146,7 @@ public class AppPanel extends JPanel
                         .addGroup(blankLinesRemovedPanel.getVerticalGroup(layout))
                         .addGroup(averageWordsPerLinePanel.getVerticalGroup(layout))
                         .addGroup(averageLineLengthPanel.getVerticalGroup(layout))
+                        .addGroup(wordSpacesPanel.getVerticalGroup(layout))
                 )
         );
     }

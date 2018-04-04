@@ -12,8 +12,7 @@ import java.util.stream.Stream;
 
 public class FileFormatter
 {
-    private static final int MAX_LINE_LENGTH = 80;
-
+    
     public class InputFileException extends RuntimeException
     {}
 
@@ -42,6 +41,9 @@ public class FileFormatter
     private File inputFile;
     private File outputFile;
     private Justification justification;
+   	public int numOfWordsPerLine;
+    
+ 
 
     public FileFormatter()
     {
@@ -75,7 +77,6 @@ public class FileFormatter
             throw new JustificationException();
 
         Results results = new Results();
-
         Scanner scan = new Scanner(inputFile);
         FileWriter out = new FileWriter(outputFile);
 
@@ -101,13 +102,13 @@ public class FileFormatter
 
         // now time for actual formatting
 
-        StringBuilder nextLine = new StringBuilder(MAX_LINE_LENGTH);
+        StringBuilder nextLine = new StringBuilder(numOfWordsPerLine);
         nextLine.append(words.get(0));
 
         for(String word : words.subList(1, words.size()))
         {
             // + 1 for a space
-            if(nextLine.length() + 1 + word.length() < MAX_LINE_LENGTH)
+            if(nextLine.length() + 1 + word.length() < numOfWordsPerLine)
             {
                 nextLine.append(' ');
                 nextLine.append(word);
@@ -117,7 +118,7 @@ public class FileFormatter
                 if(justification == Justification.RIGHT)
                 {
                     // insert enough spaces to fully right justify the line
-                    String spaceSequence = String.join("", Collections.nCopies(MAX_LINE_LENGTH - nextLine.length(), " "));
+                    String spaceSequence = String.join("", Collections.nCopies(numOfWordsPerLine - nextLine.length(), " "));
                     nextLine.insert(0, spaceSequence);
                 }
                 out.write(nextLine.toString() + "\n");
